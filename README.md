@@ -16,14 +16,14 @@ This application allows users to upload their resume and a job description, then
 
 ## Requirements
 
-- Python 3.x
+- Python 3.7+
 - Streamlit
 
 ## Installation
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/Johnaldy/Resume_optimization.git
+   git clone <repository-url>
    cd Resume_optimization
    ```
 
@@ -52,8 +52,10 @@ This application allows users to upload their resume and a job description, then
 ## Supported File Formats
 
 - `.txt` - Fully supported with text extraction
-- `.docx` - Upload supported (text extraction can be extended)
-- `.pdf` - Upload supported (text extraction can be extended)
+- `.docx` - Upload supported (text extraction not yet implemented)
+- `.pdf` - Upload supported (text extraction not yet implemented)
+
+> **Note**: Currently, only `.txt` files have full text extraction. DOCX and PDF files can be uploaded but will display a placeholder message. Support for these formats can be added in future updates.
 
 ## Future Enhancements
 
