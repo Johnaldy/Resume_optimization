@@ -1,4 +1,7 @@
 import streamlit as st
+from docx import Document
+from PyPDF2 import PdfReader
+import io
 
 st.title("Resume Tailoring App")
 
@@ -12,12 +15,35 @@ sample_file = st.file_uploader("Optional: Upload a sample resume for style (txt/
 def extract_text(uploaded_file):
     if uploaded_file is None:
         return ""
-    # Handle txt files easily
-    if uploaded_file.name.endswith(".txt"):
-        return uploaded_file.read().decode("utf-8")
-    # For now, just return a placeholder for non-txt files
-    # If you want .docx and .pdf support, just ask and I’ll give you code!
-    return "Non-txt file uploaded (add code for docx/pdf parsing here)"
+    
+    file_name = uploaded_file.name.lower()
+    
+    # Handle TXT files
+    if file_name.endswith(".txt"):
+        return uploaded_file.getvalue().decode("utf-8")
+    
+    # Handle DOCX files using python-docx
+    if file_name.endswith(".docx"):
+        try:
+            doc = Document(io.BytesIO(uploaded_file.getvalue()))
+            text = "\n".join([para.text for para in doc.paragraphs])
+            return text
+        except Exception:
+            return "Error reading DOCX file. Please ensure the file is a valid DOCX document."
+    
+    # Handle PDF files using PyPDF2
+    if file_name.endswith(".pdf"):
+        try:
+            reader = PdfReader(io.BytesIO(uploaded_file.getvalue()))
+            text_parts = []
+            for page in reader.pages:
+                text_parts.append(page.extract_text() or "")
+            return "".join(text_parts)
+        except Exception:
+            return "Error reading PDF file. Please ensure the file is a valid PDF document."
+    
+    # Unsupported file type
+    return f"Unsupported file type: {file_name}. Please upload a TXT, DOCX, or PDF file."
 
 if st.button("Generate Tailored Resume"):
     resume_text = extract_text(resume_file)
@@ -25,7 +51,6 @@ if st.button("Generate Tailored Resume"):
     sample_text = extract_text(sample_file)
 
     # For now, use a simple dummy result (replace this block with LLM/OpenAI logic as needed)
-    # If you want GPT integration, let me know!
     tailored_resume = (
         "Tailored Resume based on your input:\n\n"
         f"Original Resume:\n{resume_text}\n\n"

@@ -18,6 +18,8 @@ This application allows users to upload their resume and a job description, then
 
 - Python 3.7+
 - Streamlit
+- python-docx
+- PyPDF2
 
 ## Installation
 
@@ -29,7 +31,7 @@ This application allows users to upload their resume and a job description, then
 
 2. Install the required dependencies:
    ```bash
-   pip install streamlit
+   pip install -r requirements.txt
    ```
 
 ## Usage
@@ -51,15 +53,14 @@ This application allows users to upload their resume and a job description, then
 
 ## Supported File Formats
 
-- `.txt` - Fully supported with text extraction
-- `.docx` - Upload supported (text extraction not yet implemented)
-- `.pdf` - Upload supported (text extraction not yet implemented)
+- `.txt` - Text files with text extraction
+- `.docx` - Microsoft Word documents (using python-docx)
+- `.pdf` - PDF documents (using PyPDF2)
 
-> **Note**: Currently, only `.txt` files have full text extraction. DOCX and PDF files can be uploaded but will display a placeholder message. Support for these formats can be added in future updates.
+All three formats are fully supported for text extraction.
 
 ## Future Enhancements
 
-- Full DOCX and PDF text extraction support
 - LLM/OpenAI integration for intelligent resume tailoring
 - Additional output formats
 
